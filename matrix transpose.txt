@@ -1,0 +1,151 @@
+def main():
+    while True:
+        print("\nMatrix Operations Menu:")
+        print("1. Accept Matrices")
+        print("2. Display Matrices")
+        print("3. Add Matrices")
+        print("4. Subtract Matrices")
+        print("5. Multiply Matrices")
+        print("6. Transpose Matrices")
+        print("7. Exit")
+        
+        try:
+            choice = int(input("Enter your choice: "))
+        except ValueError:
+            print("Invalid input! Please enter a number between 1 and 7.")
+            continue
+
+        if choice == 1:
+            # Accepting the first matrix
+            row1 = int(input("Enter the total number of rows for Matrix 1: "))
+            col1 = int(input("Enter the total number of columns for Matrix 1: "))
+            m1 = []
+            print("Enter elements for Matrix 1:")
+            m1 = accept(row1, col1)
+            
+            # Accepting the second matrix
+            row2 = int(input("Enter the total number of rows for Matrix 2: "))
+            col2 = int(input("Enter the total number of columns for Matrix 2: "))
+            m2 = []
+            print("Enter elements for Matrix 2:")
+            m2 = accept(row2, col2)
+
+        elif choice == 2:
+            try:
+                print("Matrix 1:")
+                display(m1)
+                print("Matrix 2:")
+                display(m2)
+            except NameError:
+                print("Matrices have not been entered yet. Please select option 1 first.")
+
+        elif choice == 3:
+            try:
+                add(m1, m2)
+            except NameError:
+                print("Matrices have not been entered yet. Please select option 1 first.")
+
+        elif choice == 4:
+            try:
+                sub(m1, m2)
+            except NameError:
+                print("Matrices have not been entered yet. Please select option 1 first.")
+
+        elif choice == 5:
+            try:
+                mul(m1, m2)
+            except NameError:
+                print("Matrices have not been entered yet. Please select option 1 first.")
+
+        elif choice == 6:
+            try:
+                print("Transpose of Matrix 1:")
+                transpose(m1)
+                print("Transpose of Matrix 2:")
+                transpose(m2)
+            except NameError:
+                print("Matrices have not been entered yet. Please select option 1 first.")
+
+        elif choice == 7:
+            print("Exiting the program. Thank you!")
+            break
+
+        else:
+            print("Invalid choice! Please select a valid option.")
+
+# Function to accept a matrix
+def accept(row, col):
+    matrix = []
+    for i in range(row):
+        row_data = []
+        for j in range(col):
+            while True:
+                try:
+                    element = int(input(f"Enter element at position ({i+1}, {j+1}): "))
+                    row_data.append(element)
+                    break
+                except ValueError:
+                    print("Invalid input! Please enter an integer.")
+        matrix.append(row_data)
+    return matrix
+
+# Function to display a matrix
+def display(matrix):
+    for row in matrix:
+        for element in row:
+            print(element, end=" ")
+        print()
+
+# Function to add two matrices
+def add(matrix1, matrix2):
+    if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
+        print("Addition of the two matrices:")
+        for i in range(len(matrix1)):
+            for j in range(len(matrix1[0])):
+                print(matrix1[i][j] + matrix2[i][j], end=" ")
+            print()
+    else:
+        print("Addition is not possible. The dimensions of the two matrices must be the same.")
+
+# Function to subtract two matrices
+def sub(matrix1, matrix2):
+    if len(matrix1) == len(matrix2) and len(matrix1[0]) == len(matrix2[0]):
+        print("Subtraction of the two matrices:")
+        for i in range(len(matrix1)):
+            for j in range(len(matrix1[0])):
+                print(matrix1[i][j] - matrix2[i][j], end=" ")
+            print()
+    else:
+        print("Subtraction is not possible. The dimensions of the two matrices must be the same.")
+
+# Function to multiply two matrices
+def mul(matrix1, matrix2):
+    if len(matrix1[0]) == len(matrix2):
+        print("Multiplication of the two matrices:")
+        result = []
+        for i in range(len(matrix1)):
+            row = []
+            for j in range(len(matrix2[0])):
+                element = 0
+                for k in range(len(matrix2)):
+                    element += matrix1[i][k] * matrix2[k][j]
+                row.append(element)
+            result.append(row)
+
+        display(result)
+    else:
+        print("Multiplication is not possible. The number of columns in Matrix 1 must equal the number of rows in Matrix 2.")
+
+# Function to find the transpose of a matrix
+def transpose(matrix):
+    print("Transpose of the matrix:")
+    transposed = []
+    for i in range(len(matrix[0])):
+        row = []
+        for j in range(len(matrix)):
+            row.append(matrix[j][i])
+        transposed.append(row)
+    display(transposed)
+
+# Run the program
+main()
